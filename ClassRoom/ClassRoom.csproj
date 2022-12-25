@@ -9,7 +9,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Jurnal\Jurnal.csproj" />
-    <ProjectReference Include="..\Ticket\Jurnal.csproj" />
   </ItemGroup>
 
 </Project>
