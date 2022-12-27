@@ -116,7 +116,7 @@ namespace ClassRoom
                             {
                                 case 1:
                                     Console.WriteLine("\nEnter Student name");
-                                    string name = Console.ReadLine();
+                                    string? name = Console.ReadLine();
                                     List<Jurnal.Student> findName = students.FindAll(student => student.Name == name);
                                     if(findName.Count > 0)
                                     {

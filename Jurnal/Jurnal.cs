@@ -60,15 +60,15 @@ namespace Jurnal
         {
             if(Mark + ExtraPoints >= 12)
             {
-                return Name + " final mark is 12";
+                return "\n" + Name + " final mark is 12";
             } 
             else if (Mark + ExtraPoints <= 2) 
             {
-                return Name + " final mark is 2";
+                return "\n" + Name + " final mark is 2";
             } 
             else 
             {
-                return Name + " final mark is " + (Mark + ExtraPoints);
+                return "\n" + Name + " final mark is " + (Mark + ExtraPoints);
             }
         }
         override public string ToString()
