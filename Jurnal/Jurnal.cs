@@ -14,6 +14,8 @@ namespace Jurnal
         private bool invalid;
         private Presence presence;
         private int extraPoints = 0;
+
+        public Student() { }    
         public Student(string name, decimal mark, bool invalid, Presence presence, int extraPoints, int id) 
         {
             Name = name;
