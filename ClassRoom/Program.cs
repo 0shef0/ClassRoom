@@ -32,7 +32,7 @@ namespace ClassRoom
                 switch (menu)
                 {
                     case 1:
-                        if(students.Capacity == number)
+                        if(students.Count == number)
                         {
                             Console.WriteLine("\nYou added " + number +
                                 " of students. Please, delete someone to add another one");
@@ -47,11 +47,17 @@ namespace ClassRoom
                         while (true)
                         {
                             string? invalid = Console.ReadLine();
-                            if (invalid == "y" || invalid == "Y" || invalid == "yes" || invalid == "Yes") 
+                            if (invalid == "y" 
+                                || invalid == "Y" 
+                                || invalid == "yes" 
+                                || invalid == "Yes") 
                             {
                                 st_invalid = true;
                                 break;
-                            } else if (invalid == "n" || invalid == "N" || invalid == "no" || invalid == "No")
+                            } else if (invalid == "n" 
+                                || invalid == "N" 
+                                || invalid == "no" 
+                                || invalid == "No")
                             {
                                 st_invalid = false;
                                 break;
@@ -59,7 +65,10 @@ namespace ClassRoom
                             Console.WriteLine("\nPlease enter yes/no | y/n ");
                         }
                         Presence st_presence;
-                        Console.WriteLine("\nEnter student presence:\n0 - Present\n1 - Absent\n2 - Sick");
+                        Console.WriteLine("\nEnter student presence:" +
+                            "\n0 - Present" +
+                            "\n1 - Absent" +
+                            "\n2 - Sick");
                         switch(Convert.ToInt32(ToPositiveNumber("\nPlease enter from 0 to 2")))
                         {
                             case 0:
@@ -77,13 +86,14 @@ namespace ClassRoom
                         }
                         Console.WriteLine("\nEnter student extra points");
                         int st_extraPoints = Convert.ToInt32(ToPositiveNumber("\nPlease enter student extra points"));
-                        students.Add(new Student(st_name, st_mark, st_invalid, st_presence, st_extraPoints));
+                        students.Add(new Student(st_name, st_mark, st_invalid, st_presence, st_extraPoints, students.Count + 1));
                         break;
                     case 2:
                         if(students.Capacity == 0)
                         {
                             Console.WriteLine("\nThere is no students in yout jurnal");
-                        } else
+                        } 
+                        else
                         {
                             foreach(Student student in students)
                             {
@@ -92,16 +102,126 @@ namespace ClassRoom
                         }
                         break;
                     case 3:
+                        if (students.Capacity == 0)
+                        {
+                            Console.WriteLine("\nThere is no students in yout jurnal");
+                        }
+                        else
+                        {
+                            Console.WriteLine("\nEnter which field you want to find student" +
+                                "\n1 - Student name" +
+                                "\n2 - Student mark");
+                            int field = Convert.ToInt32(ToPositiveNumber("\nEnter 1 or 2"));
+                            switch (field)
+                            {
+                                case 1:
+                                    Console.WriteLine("\nEnter Student name");
+                                    string name = Console.ReadLine();
+                                    List<Jurnal.Student> findName = students.FindAll(student => student.Name == name);
+                                    if(findName.Count > 0)
+                                    {
+                                        foreach (Student student in findName)
+                                        {
+                                            Console.WriteLine(student);
+                                        }
+                                    } else
+                                    {
+                                        Console.WriteLine("\nThere no student with this name");
+                                    }
+                                    break;
+                                case 2:
+                                    Console.WriteLine("\nEnter Student mark");
+                                    int mark = Convert.ToInt32(ToPositiveNumber("\nEnter student mark"));
+                                    List<Jurnal.Student> findMark = students.FindAll(student => student.Mark == mark);
+                                    if (findMark.Count > 0)
+                                    {
+                                        foreach (Student student in findMark)
+                                        {
+                                            Console.WriteLine(student);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("\nThere no student with this mark");
+                                    }
+                                    break;
+                                default:
+                                    Console.WriteLine("\nThere is no option like that");
+                                    break;
+                            }
+                        }
                         break;
                     case 4:
+                        if (students.Capacity == 0)
+                        {
+                            Console.WriteLine("\nThere is no students in yout jurnal");
+                        } 
+                        else
+                        {
+                            Console.WriteLine("\nEnter wich parametr you want to remove student" +
+                            "\n1 - by number" +
+                            "\n2 - by extrapoints");
+                            int field = Convert.ToInt32(ToPositiveNumber("\nEnter 1 or 2"));
+                            switch (field)
+                            {
+                                case 1:
+                                    Console.WriteLine("\nEnter number of srudent");
+                                    int id = Convert.ToInt32(ToPositiveNumber("\nEnter number of student"));
+                                    int resId = students.RemoveAll(student => student.Id == id);
+                                    if (resId == 0)
+                                    {
+                                        Console.WriteLine("\nThere is no student with this number");
+                                    } 
+                                    else
+                                    {
+                                        int i = 1;
+                                        foreach (Student student in students)
+                                        {
+                                            student.Id = i;
+                                            i++;
+                                        }
+                                    }
+                                    break;
+                                case 2:
+                                    Console.WriteLine("\nEnter number of srudent");
+                                    int extraPoints = Convert.ToInt32(ToPositiveNumber("\nEnter number of student"));
+                                    int resExtra = students.RemoveAll(student => student.ExtraPoints == extraPoints);
+                                    if (resExtra == 0)
+                                    {
+                                        Console.WriteLine("\nThere is no student with this extra points");
+                                    }
+                                    else
+                                    {
+                                        int i = 1;
+                                        foreach (Student student in students)
+                                        {
+                                            student.Id = i;
+                                            i++;
+                                        }
+                                    }
+                                    break;
+                            }
+                        }
                         break;
-                    case 5: 
+                    case 5:
+                        if (students.Capacity == 0)
+                        {
+                            Console.WriteLine("\nThere is no students in yout jurnal");
+                        }
+                        else
+                        {
+                            foreach (Student student in students)
+                            {
+                                Console.WriteLine(student.GetFinalMark());
+                            }
+                        }
                         break;
-                    case 0: 
+                    case 0:
+                        Console.WriteLine("\nBye");
                         isRunning = false;
                         break;
                     default:
-                        Console.WriteLine("\nThere is no function for this number\n");
+                        Console.WriteLine("\nThere is no function for this number");
                         break;
                 }
             }

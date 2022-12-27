@@ -8,19 +8,24 @@ namespace Jurnal
 {
     public class Student
     {
+        private int id;
         private string? name;
         private decimal mark;
         private bool invalid;
         private Presence presence;
         private int extraPoints = 0;
-        public Student(string name, decimal mark, bool invalid, Presence presence, int extraPoints) 
+        public Student(string name, decimal mark, bool invalid, Presence presence, int extraPoints, int id) 
         {
             Name = name;
             Mark = mark;
             Invalid = invalid;
             Presence = presence;
             ExtraPoints = extraPoints;
+            Id = id;
         }        
+
+        public int Id { get; set; }
+
         public string? Name { get; private set; }
 
         public decimal Mark
@@ -49,24 +54,25 @@ namespace Jurnal
 
         public int ExtraPoints { get; set; }
 
-        public decimal GetFinalMark()
+        public string GetFinalMark()
         {
             if(Mark + ExtraPoints >= 12)
             {
-                return 12;
+                return Name + " final mark is 12";
             } 
             else if (Mark + ExtraPoints <= 2) 
             {
-                return 2;
+                return Name + " final mark is 2";
             } 
             else 
             {
-                return Mark + ExtraPoints;
+                return Name + " final mark is " + (Mark + ExtraPoints);
             }
         }
         override public string ToString()
         {
-            return "\nStudent name: " + Name +
+            return "\nStudent number: " + Id +
+                "\nStudent name: " + Name +
                 "\nStudent mark: " + Mark +
                 "\nIs Student an invalid?: " + (Invalid ? "yes" : "no") +
                 "\nIs Student present today?: he is " + Presence +
