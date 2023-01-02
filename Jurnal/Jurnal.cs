@@ -9,11 +9,11 @@ namespace Jurnal
     public class Student
     {
         private int id;
-        private string? name;
+        private string? name = "Student";
         private decimal mark;
         private bool invalid;
         private Presence presence;
-        private int extraPoints = 0;
+        private int extraPoints;
 
         public Student() { }    
         public Student(string name, decimal mark, bool invalid, Presence presence, int extraPoints, int id) 
@@ -28,7 +28,16 @@ namespace Jurnal
 
         public int Id { get; set; }
 
-        public string? Name { get; private set; }
+        public string? Name { 
+            get { return name; }
+            set 
+            {
+                if (value != "")
+                {
+                    name = value;
+                }
+            } 
+        }
 
         public decimal Mark
         {

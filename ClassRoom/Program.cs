@@ -39,7 +39,7 @@ namespace ClassRoom
                             break;
                         }
                         Console.WriteLine("\nEnter student name");
-                        string? st_name = Console.ReadLine() ?? "Student";
+                        string? st_name = Console.ReadLine();
                         Console.WriteLine("\nEnter student mark");
                         decimal st_mark = ToPositiveNumber("\nPlease enter student mark");
                         Console.WriteLine("\nEnter is student invalid (yes/no | y/n)");
@@ -226,6 +226,7 @@ namespace ClassRoom
                 }
             }
         }
+
         static decimal ToPositiveNumber(string message)
         {
             decimal res;
