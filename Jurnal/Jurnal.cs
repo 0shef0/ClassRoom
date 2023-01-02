@@ -10,13 +10,13 @@ namespace Jurnal
     {
         private int id;
         private string? name = "Student";
-        private decimal mark;
+        private double mark;
         private bool invalid;
         private Presence presence;
         private int extraPoints;
 
         public Student() { }    
-        public Student(string name, decimal mark, bool invalid, Presence presence, int extraPoints, int id) 
+        public Student(string name, double mark, bool invalid, Presence presence, int extraPoints, int id) 
         {
             Name = name;
             Mark = mark;
@@ -32,14 +32,15 @@ namespace Jurnal
             get { return name; }
             set 
             {
-                if (value != "")
+                if (value != ""
+                    || value != null)
                 {
                     name = value;
                 }
             } 
         }
 
-        public decimal Mark
+        public double Mark
         {
             get { return mark; }
             set

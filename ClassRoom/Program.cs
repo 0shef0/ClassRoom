@@ -41,7 +41,7 @@ namespace ClassRoom
                         Console.WriteLine("\nEnter student name");
                         string? st_name = Console.ReadLine();
                         Console.WriteLine("\nEnter student mark");
-                        decimal st_mark = ToPositiveNumber("\nPlease enter student mark");
+                        double st_mark = ToPositiveNumber("\nPlease enter student mark");
                         Console.WriteLine("\nEnter is student invalid (yes/no | y/n)");
                         bool st_invalid;
                         while (true)
@@ -227,15 +227,15 @@ namespace ClassRoom
             }
         }
 
-        static decimal ToPositiveNumber(string message)
+        static double ToPositiveNumber(string message)
         {
-            decimal res;
+            double res;
             while (true)
             {
                 string? line = Console.ReadLine();
                 try
                 {
-                    res = Convert.ToDecimal(line);
+                    res = Convert.ToDouble(line);
                     if(res < 0)
                     {
                         throw new FormatException();
