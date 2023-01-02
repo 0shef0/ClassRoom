@@ -14,7 +14,7 @@ namespace ClassRoom
             {
                 number = Convert.ToInt32(ToPositiveNumber("\nPlease enter number of students"));
             }
-            List<Jurnal.Student> students = new List<Jurnal.Student>();
+            List<Student> students = new List<Student>();
             while(isRunning)
             {
                 int? menu = null;

@@ -9,7 +9,7 @@ namespace Jurnal
     public class Student
     {
         private int id;
-        private string? name = "Student";
+        private string name = "Student";
         private double mark;
         private bool invalid;
         private Presence presence;
@@ -33,7 +33,7 @@ namespace Jurnal
             set 
             {
                 if (value != ""
-                    || value != null)
+                    && value != null)
                 {
                     name = value;
                 }
