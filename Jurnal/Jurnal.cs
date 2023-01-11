@@ -3,92 +3,100 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Docs.Methods;
 
-namespace Jurnal
+namespace Docs
 {
-    public class Student
+    public class JurnalEventArgs
     {
-        private int id;
-        private string name = "Student";
-        private double mark;
-        private bool invalid;
-        private Presence presence;
-        private int extraPoints;
+        public string Message { get; }
 
-        public Student() { }    
-        public Student(string name, double mark, bool invalid, Presence presence, int extraPoints, int id) 
+        public int Count { get; }
+
+        public JurnalEventArgs(string message, int count)
         {
-            Name = name;
-            Mark = mark;
-            Invalid = invalid;
-            Presence = presence;
-            ExtraPoints = extraPoints;
-            Id = id;
-        }        
+            Message = message;
+            Count = count;
+        }
+    }
 
-        public int Id { get; set; }
+    public class Jurnal : IJurnal
+    {
+        public delegate void JurnalHandler(Jurnal jurnal, JurnalEventArgs e);
+        public event JurnalHandler? Notify;
 
-        public string? Name { 
-            get { return name; }
-            set 
-            {
-                if (value != ""
-                    && value != null)
-                {
-                    name = value;
-                }
-            } 
+        private DateOnly date;
+        private Teacher teacher;
+        private List<Student> students = new List<Student>();
+        private int maxNumOfStudents;
+
+        public Jurnal(DateOnly date, Teacher teacher, int maxNumOfStudents)
+        {
+            Date = date;
+            Teacher = teacher;
+            MaxNumOfStudents = maxNumOfStudents;
         }
 
-        public double Mark
+        public int MaxNumOfStudents { get; set; }
+
+        public DateOnly Date { get; set; }
+
+        public Teacher Teacher { get; set; }
+
+        public List<Student>? Students { get { return students; } }
+
+        public void AddStudent(Student student)
         {
-            get { return mark; }
-            set
+            if (student == null)
             {
-                if (value <= 2)
-                {
-                    mark = 2;
-                } 
-                else if (value >= 12)
-                {
-                    mark = 12;
-                } 
-                else
-                {
-                    mark = value;
-                }
+                Notify?.Invoke(this, new JurnalEventArgs("student object is null", students.Count));
+            }
+            else
+            {
+                students.Add(student);
+                Notify?.Invoke(this, new JurnalEventArgs("Added student", students.Count));
             }
         }
 
-        public bool Invalid { get; private set; }
-
-        public Presence Presence { get; private set; }
-
-        public int ExtraPoints { get; set; }
-
-        public string GetFinalMark()
+        public string GetInformation()
         {
-            if(Mark + ExtraPoints >= 12)
+            string info = Teacher.ToString() + $"\nDate {Date}";
+            foreach (Student student in students)
             {
-                return "\n" + Name + " final mark is 12";
-            } 
-            else if (Mark + ExtraPoints <= 2) 
+                info += "\n" + student.ToString();
+            }
+            return info;
+        }
+
+        public void RemoveAllStudents()
+        {
+            students.Clear();
+            Notify?.Invoke(this, new JurnalEventArgs("All students deleted", students.Count));
+        }
+
+        public void RemoveStudent(Student rm_student)
+        {
+            int resRemove = students.RemoveAll(student => student == rm_student);
+            if (resRemove == 0)
             {
-                return "\n" + Name + " final mark is 2";
-            } 
-            else 
+                Notify?.Invoke(this, new JurnalEventArgs("\nThere is no student like this", students.Count));
+            }
+            else
             {
-                return "\n" + Name + " final mark is " + (Mark + ExtraPoints);
+                SortStudents();
+                Notify?.Invoke(this, new JurnalEventArgs($"\nRemoved student {rm_student}", students.Count));
             }
         }
-        override public string ToString()
+
+        public void SortStudents()
         {
-            return "\nStudent number: " + Id +
-                "\nStudent name: " + Name +
-                "\nStudent mark: " + Mark +
-                "\nIs Student an invalid?: " + (Invalid ? "yes" : "no") +
-                "\nIs Student present today?: he is " + Presence +
-                "\nStudent's extra points: " + ExtraPoints;
+            students.Sort();
+            int i = 1;
+            foreach (Student student in students)
+            {
+                student.Id = i;
+                i++;
+            }
         }
     }
 }

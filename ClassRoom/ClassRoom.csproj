@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Jurnal\Jurnal.csproj" />
+    <ProjectReference Include="..\Jurnal\Docs.csproj" />
   </ItemGroup>
 
 </Project>
