@@ -1,7 +1,7 @@
 ﻿using Docs;
-using static Docs.Methods;
+using static Docs.Methods.ToPositiveNum;
 using static Docs.Menu;
-
+using Docs.Models;
 
 namespace ClassRoom
 {
@@ -65,7 +65,8 @@ namespace ClassRoom
             Console.WriteLine("Enter your lesson\n");
             string lesson = Console.ReadLine();
             Jurnal jurnal = new Jurnal(date, new Teacher(name, age, t_invalid, lesson), number);
-            while(isRunning)
+            jurnal.Notify += DisplayMessage;
+            while (isRunning)
             {
                 int menu = OptionChoice();
                 switch (menu)
@@ -91,6 +92,18 @@ namespace ClassRoom
                     case 7:
                         ChangeNumOfStudents(jurnal);
                         break;
+                    case 8:
+                        ChangeStudentParams(jurnal);
+                        break;
+                    case 9:
+                        ChangeTeacherParams(jurnal);
+                        break;
+                    case 10:
+                        Serialise(jurnal);
+                        break;
+                    case 11:
+                        Deserialise(jurnal);
+                        break;
                     case 0:
                         Exit(out isRunning);
                         break;
@@ -100,7 +113,7 @@ namespace ClassRoom
                 }
             }
         }
-        void DysplayMessage(Jurnal jurnal, JurnalEventArgs e)
+        static void DisplayMessage(Jurnal jurnal, JurnalEventArgs e)
         {
             Console.WriteLine(e.Message);
             Console.WriteLine($"Now, you have {jurnal.Students.Count} of students");

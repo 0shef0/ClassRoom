@@ -4,18 +4,21 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Docs.Interfaces;
 
 namespace Docs
 {
-    public class Teacher : Human
+    public class Teacher : IHuman
     {
-        private bool invalid;
-
+        public Teacher()
+        { 
+        
+        }
         public Teacher(string name, int age, bool invalid, string lesson) 
         { 
             Name = name;
             Age = age;
-            this.invalid = invalid;
+            Invalid = invalid;
             Lesson = lesson;
         }
         
@@ -23,7 +26,7 @@ namespace Docs
         public override string Name { get; set; }
         public override int Age { get; set; }
         public override bool Invalid { get; }
-        public string Lesson { get; private set; }
+        public string Lesson { get; set; }
 
         public override string ToString()
         {

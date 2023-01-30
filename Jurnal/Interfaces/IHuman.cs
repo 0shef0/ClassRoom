@@ -4,17 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Docs
+namespace Docs.Interfaces
 {
-    public abstract class Human
+    public abstract class IHuman
     {
-        private int name;
-        private int age;
-        private bool invalid;
-
         public abstract string Name { get; set; }
 
-        public abstract int Age { get; set;}
+        public abstract int Age { get; set; }
 
         public abstract bool Invalid { get; }
 

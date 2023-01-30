@@ -3,7 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static Docs.Methods;
+using Docs.Interfaces;
+using Docs.Methods;
+using Docs.Methods.Repository;
+using Docs.Models;
+using static Docs.Methods.ToPositiveNum;
 
 namespace Docs
 {
@@ -30,11 +34,15 @@ namespace Docs
                 "\n5 - delete object" +
                 "\n6 - delete all objects" +
                 "\n7 - change maximum number of students" +
+                "\n8 - change student" +
+                "\n9 - change teacher" +
+                "\n10 - serialise" +
+                "\n11 - deserialise" +
                 "\n0 - exit programm");
-            Console.WriteLine("\nChoose item from the menu (enter from 0 to 7)\n");
-            while (menu > 7 || menu < 0)
+            Console.WriteLine("\nChoose item from the menu (enter from 0 to 10)\n");
+            while (menu > 10 || menu < 0)
             {
-                menu = Convert.ToInt32(ToPositiveNumber("\nPlease enter from 0 to 7"));
+                menu = Convert.ToInt32(ToPositiveNumber("\nPlease enter from 0 to 10"));
             }
             return menu;
         }
@@ -105,7 +113,7 @@ namespace Docs
             }
             Console.WriteLine("\nEnter student extra points");
             int st_extraPoints = Convert.ToInt32(ToPositiveNumber("\nPlease enter student extra points"));
-            jurnal.AddStudent(new Student(st_name, st_mark, st_invalid, st_presence, st_extraPoints, jurnal.Students.Count + 1, st_age));
+            AddObj.AddStudent(jurnal, new Student(st_name, st_mark, st_invalid, st_presence, st_extraPoints, jurnal.Students.Count + 1, st_age));
         }
 
         public static List<Student> FindStudent(Jurnal jurnal)
@@ -217,26 +225,22 @@ namespace Docs
             List<Student> students = FindStudent(jurnal);
             if(students.Count != 0)
             {
-                jurnal.RemoveStudent(students[0]);
+                RemoveObj.RemoveStudent(jurnal, students[0]);
+                SortObj.SortStudents(jurnal);
             } else
             {
                 Console.WriteLine("\nThere is no student like that");
-            }
+            }          
         }
 
         public static void RemoveAllStudents(Jurnal jurnal)
         {
-            jurnal.RemoveAllStudents();
-        }
-
-        public static void GetInformationByDay(Jurnal jurnal)
-        {
-            jurnal.GetInformation();
+            RemoveAllObj.RemoveAllStudents(jurnal);
         }
 
         public static void SortStudents(Jurnal jurnal)
         {
-            jurnal.SortStudents();
+            SortObj.SortStudents(jurnal);
         }
 
         public static void ChangeStudentParams(Jurnal jurnal)
@@ -288,7 +292,7 @@ namespace Docs
                     Console.WriteLine("\nThere is no option like that");
                     return;
             }
-            jurnal.SortStudents();
+            SortObj.SortStudents(jurnal);
         }
 
         public static void ChangeTeacherParams(Jurnal jurnal)
@@ -335,12 +339,50 @@ namespace Docs
             }
         }
 
+        public static void Serialise(Jurnal jurnal)
+        {
+            Console.WriteLine("Select type of serialisation" +
+                "\n1 - JSON" +
+                "\n2 - XML");
+            int select = -1;
+            while (select < 0 || select > 2)
+            {
+                select = Convert.ToInt32(ToPositiveNumber("\nEnter from 1 or 2"));
+            }
+            if (select == 1)
+            {
+                ToJson.Display(jurnal);
+            }
+            else
+            {
+                ToXML.Display(jurnal);
+            }
+        }
+
+        public static void Deserialise(Jurnal jurnal)
+        {
+            Console.WriteLine("Select type of serialisation" +
+                "\n1 - JSON" +
+                "\n2 - XML");
+            int select = -1;
+            while (select < 0 || select > 2)
+            {
+                select = Convert.ToInt32(ToPositiveNumber("\nEnter from 1 or 2"));
+            }
+            if (select == 1)
+            {
+                FromJson.ConvertFromJson(Convert.ToString(jurnal.GetHashCode()));
+            }
+            else
+            {
+                FromXML.ConvertFromXML(Convert.ToString(jurnal.GetHashCode()));
+            }
+        }
+
         public static void Exit(out bool isRunning)
         {
             Console.WriteLine("Bye");
             isRunning = false;
         }
-
-
     }
 }

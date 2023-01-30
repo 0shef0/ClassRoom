@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Docs
+namespace Docs.Methods
 {
-    public static class Methods
+    public class ToPositiveNum
     {
         public static double ToPositiveNumber(string message)
         {

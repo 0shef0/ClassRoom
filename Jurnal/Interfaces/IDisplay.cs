@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Docs
+namespace Docs.Interfaces
 {
-    public enum Presence{
-        Present,
-        Absent,
-        Sick
+    internal interface IDisplay
+    {
+        public static void Display<T>(T obj) { }
     }
 }
