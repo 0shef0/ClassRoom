@@ -116,7 +116,7 @@ namespace Docs
             AddObj.AddStudent(jurnal, new Student(st_name, st_mark, st_invalid, st_presence, st_extraPoints, jurnal.Students.Count + 1, st_age));
         }
 
-        public static List<Student> FindStudent(Jurnal jurnal)
+        public static IEnumerable<Student> FindStudent(Jurnal jurnal)
         {
             List<Student> find = new List<Student>();
             if (jurnal.Students is null || jurnal.Students.Count == 0)
@@ -139,23 +139,27 @@ namespace Docs
                     case 1:
                         Console.WriteLine("\nEnter Student number");
                         int number = Convert.ToInt32(ToPositiveNumber("\nEnter student number"));
-                        find = jurnal.Students.FindAll(student => student.Id == number);
-                        return find;
+                        return from stud in jurnal.Students
+                               where stud.Id.Equals(number)
+                               select stud;
                     case 2:
                         Console.WriteLine("\nEnter Student age");
                         int age = Convert.ToInt32(ToPositiveNumber("\nEnter student age"));
-                        find = jurnal.Students.FindAll(student => student.Age == age);
-                        return find;
+                        return from stud in jurnal.Students
+                               where stud.Age.Equals(age)
+                               select stud;
                     case 3:
                         Console.WriteLine("\nEnter Student name");
                         string? name = Console.ReadLine();
-                        find = jurnal.Students.FindAll(student => student.Name == name);
-                        return find;
+                        return from stud in jurnal.Students
+                               where stud.Name.Equals(name)
+                               select stud;
                     case 4:
                         Console.WriteLine("\nEnter Student mark");
                         int mark = Convert.ToInt32(ToPositiveNumber("\nEnter student mark"));
-                        find = jurnal.Students.FindAll(student => student.Mark == mark);
-                        return find;
+                        return from stud in jurnal.Students
+                               where stud.Mark.Equals(mark)
+                               select stud;
                     case 5:
                         Console.WriteLine("\nEnter is Student invalid");
                         bool st_invalid = false;
@@ -179,9 +183,10 @@ namespace Docs
                                 break;
                             }
                             Console.WriteLine("\nPlease enter yes/no | y/n ");
-                        }
-                        find = jurnal.Students.FindAll(student => student.Invalid == st_invalid);
-                        return find;
+                        }   
+                        return from stud in jurnal.Students
+                               where stud.Invalid.Equals(st_invalid)
+                               select stud;
                     case 6:
                         Presence presence;
                         Console.WriteLine("\nEnter student presence:" +
@@ -208,8 +213,9 @@ namespace Docs
                                 presence = Presence.Absent;
                                 break;
                         }
-                        find = jurnal.Students.FindAll(student => student.Presence == presence);
-                        return find;
+                        return from stud in jurnal.Students
+                               where stud.Presence.Equals(presence)
+                               select stud;
                     default:
                         return find;
                 }
@@ -222,11 +228,11 @@ namespace Docs
             {
                 Console.WriteLine("\nThere is no students in yout jurnal");
             }
-            List<Student> students = FindStudent(jurnal);
-            if(students.Count != 0)
+            IEnumerable<Student> students = FindStudent(jurnal);
+            if(students.Count() != 0)
             {
-                RemoveObj.RemoveStudent(jurnal, students[0]);
-                SortObj.SortStudents(jurnal);
+                RemoveObj.RemoveStudent(jurnal, students.First());
+                SortObj.SortStudents(jurnal, 0);
             } else
             {
                 Console.WriteLine("\nThere is no student like that");
@@ -240,7 +246,17 @@ namespace Docs
 
         public static void SortStudents(Jurnal jurnal)
         {
-            SortObj.SortStudents(jurnal);
+            Console.WriteLine("\nEnter sorting options:" +
+                            "\n0 - Id" +
+                            "\n1 - Name" +
+                            "\n2 - Age" +
+                            "\n3 - Mark");
+            int choice = 4;
+            while (choice > 3)
+            {
+                choice = Convert.ToInt32(ToPositiveNumber("\nPlease enter from 0 to 2"));
+            }
+            SortObj.SortStudents(jurnal, choice);
         }
 
         public static void ChangeStudentParams(Jurnal jurnal)
@@ -292,7 +308,7 @@ namespace Docs
                     Console.WriteLine("\nThere is no option like that");
                     return;
             }
-            SortObj.SortStudents(jurnal);
+            SortObj.SortStudents(jurnal, 0);
         }
 
         public static void ChangeTeacherParams(Jurnal jurnal)
@@ -334,7 +350,7 @@ namespace Docs
             {
                 foreach (Student student in jurnal.Students)
                 {
-                    Console.WriteLine(student);
+                    DisplayConsole.Display(student);
                 }
             }
         }

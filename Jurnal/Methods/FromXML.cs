@@ -16,7 +16,7 @@ namespace Docs.Methods
             using (FileStream fs = new FileStream($"{filename}.xml", FileMode.Open))
             {
                 Jurnal obj = formatter.Deserialize(fs) as Jurnal;
-                Console.WriteLine(obj.ToString());
+                DisplayConsole.Display(obj);
             }
         }
     }

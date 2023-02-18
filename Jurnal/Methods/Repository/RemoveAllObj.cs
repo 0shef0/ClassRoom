@@ -10,10 +10,9 @@ namespace Docs.Methods.Repository
 {
     public class RemoveAllObj
     {
-        public static void RemoveAllStudents(Jurnal jurnal/*, JurnalHandler? Notify*/)
+        public static void RemoveAllStudents(Jurnal jurnal)
         {
             jurnal.Students.Clear();
-/*            Notify?.Invoke(list, new JurnalEventArgs("All students deleted", list.Count));*/
         }
     }
 }

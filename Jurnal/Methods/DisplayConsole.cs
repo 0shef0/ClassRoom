@@ -9,7 +9,7 @@ namespace Docs.Methods
 {
     public class DisplayConsole: IDisplay
     {
-        public void Display<T>(T obj)
+        public static void Display<T>(T obj)
         {
             Console.WriteLine(obj.ToString());
         }

@@ -15,7 +15,7 @@ namespace Docs.Methods
             using (FileStream fs = new FileStream($"{filename}.json", FileMode.Open))
             {
                 Jurnal obj = await JsonSerializer.DeserializeAsync<Jurnal>(fs);
-                Console.WriteLine(obj.ToString());
+                DisplayConsole.Display(obj);
             }
         }
     }

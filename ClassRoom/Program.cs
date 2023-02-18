@@ -2,6 +2,7 @@
 using static Docs.Methods.ToPositiveNum;
 using static Docs.Menu;
 using Docs.Models;
+using Docs.Methods;
 
 namespace ClassRoom
 {
@@ -81,7 +82,10 @@ namespace ClassRoom
                         SortStudents(jurnal);
                         break;
                     case 4:
-                        FindStudent(jurnal);
+                        foreach(Student stud in FindStudent(jurnal))
+                        {
+                            DisplayConsole.Display(stud);
+                        }
                         break;
                     case 5:
                         RemoveStudent(jurnal);

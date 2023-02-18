@@ -11,17 +11,9 @@ namespace Docs.Methods.Repository
 {
     public class RemoveObj
     {
-        public static void RemoveStudent(Jurnal jurnal, Student student/*, JurnalHandler? Notify*/)
+        public static void RemoveStudent(Jurnal jurnal, Student student)
         {
             int resRemove = jurnal.Students.RemoveAll(elem => elem == student);
-            if (resRemove == 0)
-            {
-/*                Notify?.Invoke(list, new JurnalEventArgs("\nThere is no student like this", list.Count));*/
-            }
-            else
-            {
-/*                Notify?.Invoke(list, new JurnalEventArgs($"\nRemoved student {student}", list.Count));*/
-            }
         }
     }
 }

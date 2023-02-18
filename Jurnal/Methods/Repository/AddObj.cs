@@ -12,15 +12,7 @@ namespace Docs.Methods.Repository
     {
         public static void AddStudent(Jurnal jurnal, Student student)
         {
-            if (student == null)
-            {
-/*                jurnal.Notify?.Invoke(jurnal, new JurnalEventArgs("student object is null", jurnal.Students.Count));*/
-            }
-            else
-            { 
                 jurnal.Students.Add(student);
-/*                Notify?.Invoke(jurnal, new JurnalEventArgs("Added student", jurnal.Students.Count));*/
-            }
         }
     }
 }
